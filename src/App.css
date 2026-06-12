@@ -224,3 +224,16 @@ body,
     font-size: 34px;
   }
 }
+
+.menu-item,
+.logout-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-icon {
+  font-size: 22px;
+  color: #1591DC;
+  flex-shrink: 0;
+}
