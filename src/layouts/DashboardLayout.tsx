@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
@@ -7,18 +8,20 @@ type Props = {
 };
 
 function DashboardLayout({ children }: Props) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="dashboard-layout">
-      <Sidebar />
+      <Sidebar
+        open={menuOpen}
+        closeMenu={() => setMenuOpen(false)}
+      />
 
       <main className="dashboard-main">
-        <Header />
+        <Header openMenu={() => setMenuOpen(true)} />
 
         <section className="dashboard-content">
-          {/* Soporta React Router (Outlet) */}
           <Outlet />
-
-          {/* Soporta uso antiguo con children */}
           {children}
         </section>
       </main>
