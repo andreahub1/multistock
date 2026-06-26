@@ -27,4 +27,9 @@ urlpatterns = [
         "productos/<int:id>/",
         views.producto_detalle
     ),
+
+    path(
+        "productos/codigo/<str:codigo>/",
+        views.buscar_producto_codigo
+    ),
 ]

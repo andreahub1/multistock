@@ -173,3 +173,31 @@ def producto_detalle(request, id):
         return Response({
             "mensaje": "Producto eliminado"
         })
+        
+        
+        # ==================================
+# BUSCAR PRODUCTO POR CODIGO DE BARRAS
+# ==================================
+
+@api_view(["GET"])
+def buscar_producto_codigo(request, codigo):
+
+    try:
+        producto = Producto.objects.get(
+            codigo_barras=codigo
+        )
+
+        serializer = ProductoSerializer(
+            producto
+        )
+
+        return Response(serializer.data)
+
+    except Producto.DoesNotExist:
+
+        return Response(
+            {
+                "error": "Producto no encontrado"
+            },
+            status=404
+        )

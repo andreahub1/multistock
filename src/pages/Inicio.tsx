@@ -12,7 +12,7 @@ function Inicio() {
       <div className="inicio-container">
         <div className="welcome-section">
           <div>
-            <h1>Bienvenido, Admin 👋</h1>
+            <h1>Bienvenido, Admin </h1>
             <p>Resumen general de tu inventario</p>
           </div>
 

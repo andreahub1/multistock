@@ -6,6 +6,7 @@ import {
   FiBox,
   FiGrid,
   FiRepeat,
+  FiCamera,
   FiSettings,
   FiLogOut,
 } from "react-icons/fi";
@@ -23,7 +24,6 @@ function Sidebar() {
       </div>
 
       <nav className="sidebar-menu">
-
         <NavLink
           to="/inicio"
           className={({ isActive }) =>
@@ -65,6 +65,16 @@ function Sidebar() {
         </NavLink>
 
         <NavLink
+          to="/escaner"
+          className={({ isActive }) =>
+            isActive ? "menu-item active" : "menu-item"
+          }
+        >
+          <FiCamera className="menu-icon" />
+          Escáner
+        </NavLink>
+
+        <NavLink
           to="/administracion"
           className={({ isActive }) =>
             isActive ? "menu-item active" : "menu-item"
@@ -73,7 +83,6 @@ function Sidebar() {
           <FiSettings className="menu-icon" />
           Administración
         </NavLink>
-
       </nav>
 
       <NavLink to="/" className="logout-item">

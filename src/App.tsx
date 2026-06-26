@@ -7,61 +7,19 @@ import Productos from "./pages/Productos";
 import Categorias from "./pages/Categorias";
 import Movimientos from "./pages/Movimientos";
 import Administracion from "./pages/Administracion";
-
-import ProtectedRoute from "./routes/ProtectedRoute";
+import Escaner from "./pages/Escaner";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<Login />} />
-
-        <Route
-          path="/inicio"
-          element={
-            <ProtectedRoute>
-              <Inicio />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/productos"
-          element={
-            <ProtectedRoute>
-              <Productos />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/categorias"
-          element={
-            <ProtectedRoute>
-              <Categorias />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/movimientos"
-          element={
-            <ProtectedRoute>
-              <Movimientos />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/administracion"
-          element={
-            <ProtectedRoute role="Administrador">
-              <Administracion />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path="/inicio" element={<Inicio />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/movimientos" element={<Movimientos />} />
+        <Route path="/escaner" element={<Escaner />} />
+        <Route path="/administracion" element={<Administracion />} />
       </Routes>
     </BrowserRouter>
   );
