@@ -1,24 +1,7 @@
 ﻿from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from .models import Usuario, Producto 
 
-# ==========================================
-# SERIALIZADORES ORIGINALES DEL PROYECTO
-# ==========================================
-class UsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = '__all__'
-
-class ProductoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Producto
-        fields = '__all__'
-
-# ==========================================
-# TUS SERIALIZADORES REQUERIDOS (JWT)
-# ==========================================
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
