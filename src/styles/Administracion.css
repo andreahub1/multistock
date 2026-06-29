@@ -1,0 +1,240 @@
+.admin-tabs {
+  display: flex;
+  gap: 30px;
+  margin-top: 15px;
+  border-bottom: 1px solid #dbeafe;
+  margin-bottom: 25px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b7280;
+  position: relative;
+}
+
+.tab.active {
+  color: #1591dc;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 3px;
+  background: #1591dc;
+}
+
+.admin-card {
+  background: white;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.admin-card h1,
+.admin-card h2 {
+  color: #111827;
+  font-weight: 700;
+}
+
+.admin-card h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.admin-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.admin-form input,
+.admin-form select {
+  padding: 12px;
+  border: 1px solid #b7d9f5;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.admin-form button {
+  grid-column: span 2;
+  background: #1591dc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.admin-role {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+}
+
+.admin {
+  background: #1591dc;
+}
+
+.employee {
+  background: #9ca3af;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 6px 10px;
+  transition: 0.2s;
+}
+
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+}
+
+.btn-view {
+  background: #facc15;
+  color: #111827;
+}
+
+.btn-view:hover {
+  background: #eab308;
+}
+
+.btn-save {
+  grid-column: span 2;
+  background: #1591dc;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-save:hover {
+  background: #1173b5;
+}
+
+.btn-cancel {
+  background: #6b7280;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: #4b5563;
+}
+
+.btn-delete {
+  background: #ef4444;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}
+
+.alertas-container {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 450px;
+}
+
+.alerta {
+  padding: 12px 15px;
+  border-radius: 8px;
+}
+
+.alerta h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.alerta p {
+  margin-top: 4px;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.alerta-warning {
+  background: #fff2e8;
+  border: 1px solid #ffa940;
+}
+
+.alerta-warning h3 {
+  color: #d46b08;
+}
+
+.alerta-info {
+  background: #e6f4ff;
+  border: 1px solid #1677ff;
+}
+
+.alerta-info h3 {
+  color: #0958d9;
+}
+
+.alerta-danger {
+  background: #ffe5e5;
+  border: 1px solid #ff4d4d;
+}
+
+.alerta-danger h3 {
+  color: #cf1322;
+}

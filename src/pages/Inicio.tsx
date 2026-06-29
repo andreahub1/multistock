@@ -1,104 +1,240 @@
+import { useEffect, useMemo, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import {
   FaBoxOpen,
   FaTags,
   FaExclamationTriangle,
   FaTimesCircle,
+  FaSearch,
 } from "react-icons/fa";
 
+type Producto = {
+  id: number;
+  codigo: string;
+  nombre: string;
+  categoria: string;
+  precio: number;
+  stock: number;
+};
+
 function Inicio() {
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
+  const cargarProductos = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/productos/");
+      const data = await res.json();
+
+      setProductos(data);
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const productosFiltrados = useMemo(() => {
+    return productos.filter((producto) =>
+      producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    );
+  }, [productos, busqueda]);
+
+  const totalProductos = productos.length;
+
+  const totalCategorias = new Set(
+    productos.map((producto) => producto.categoria)
+  ).size;
+
+  const stockBajo = productos.filter(
+    (producto) => producto.stock > 0 && producto.stock <= 8
+  ).length;
+
+  const agotados = productos.filter((producto) => producto.stock === 0).length;
+
+  const productosStockBajo = productos.filter(
+    (producto) => producto.stock > 0 && producto.stock <= 8
+  );
+
+  const productosAgotados = productos.filter(
+    (producto) => producto.stock === 0
+  );
+
   return (
     <DashboardLayout>
       <div className="inicio-container">
         <div className="welcome-section">
           <div>
-            <h1>Bienvenido, Admin </h1>
+            <h1>¡Bienvenido, Admin!</h1>
             <p>Resumen general de tu inventario</p>
           </div>
 
-          <input
-            type="text"
-            placeholder="Buscar productos..."
-            className="search-input"
-          />
+          <div className="search-box">
+            <FaSearch />
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+          </div>
         </div>
+
+        {cargando && <p>Cargando productos...</p>}
+
+        {busqueda && (
+          <div className="search-results">
+            <h3>Resultados de búsqueda</h3>
+
+            {productosFiltrados.length > 0 ? (
+              productosFiltrados.map((producto) => (
+                <div key={producto.id} className="search-result-item">
+                  <div>
+                    <strong>{producto.nombre}</strong>
+                    <p>{producto.categoria}</p>
+                  </div>
+
+                  <span>Stock: {producto.stock}</span>
+                </div>
+              ))
+            ) : (
+              <p>No se encontraron productos.</p>
+            )}
+          </div>
+        )}
 
         <div className="stats-grid">
           <div className="stat-card">
-            <FaBoxOpen className="stat-icon blue" />
+            <div className="stat-icon-box blue-bg">
+              <FaBoxOpen />
+            </div>
+
             <div>
-              <h3>Total Productos</h3>
-              <span>5</span>
+              <h3>Total de Productos</h3>
+              <span>{totalProductos}</span>
+              <p>Inventario registrado</p>
             </div>
           </div>
 
           <div className="stat-card">
-            <FaTags className="stat-icon purple" />
+            <div className="stat-icon-box green-bg">
+              <FaTags />
+            </div>
+
             <div>
               <h3>Categorías</h3>
-              <span>10</span>
+              <span>{totalCategorias}</span>
+              <p>Clasificación actual</p>
             </div>
           </div>
 
           <div className="stat-card">
-            <FaExclamationTriangle className="stat-icon orange" />
+            <div className="stat-icon-box orange-bg">
+              <FaExclamationTriangle />
+            </div>
+
             <div>
               <h3>Stock Bajo</h3>
-              <span>8</span>
+              <span>{stockBajo}</span>
+              <p className="warning">Requieren atención</p>
             </div>
           </div>
 
           <div className="stat-card">
-            <FaTimesCircle className="stat-icon red" />
+            <div className="stat-icon-box red-bg">
+              <FaTimesCircle />
+            </div>
+
             <div>
               <h3>Agotados</h3>
-              <span>3</span>
+              <span>{agotados}</span>
+              <p className="danger">Sin disponibilidad</p>
             </div>
           </div>
         </div>
 
         <div className="content-grid">
           <div className="card">
-            <h2>Resumen de movimientos</h2>
-
-            <div className="fake-chart">
-              <div className="chart-line chart-green"></div>
-              <div className="chart-line chart-blue"></div>
+            <div className="card-header">
+              <h2>Productos con stock bajo</h2>
             </div>
+
+            {productosStockBajo.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {productosStockBajo.map((producto) => (
+                    <tr key={producto.id}>
+                      <td>{producto.codigo}</td>
+                      <td>{producto.nombre}</td>
+                      <td>{producto.categoria}</td>
+                      <td>
+                        <span className="badge warning-badge">
+                          {producto.stock}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No hay productos con stock bajo.</p>
+            )}
           </div>
 
           <div className="card">
-            <h2>Últimos movimientos</h2>
+            <div className="card-header">
+              <h2>Productos agotados</h2>
+            </div>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Tipo</th>
-                  <th>Cantidad</th>
-                </tr>
-              </thead>
+            {productosAgotados.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr>
-                  <td>Teclado Mecánico</td>
-                  <td className="entrada">Entrada</td>
-                  <td>15</td>
-                </tr>
+                <tbody>
+                  {productosAgotados.map((producto) => (
+                    <tr key={producto.id}>
+                      <td>{producto.nombre}</td>
+                      <td>{producto.categoria}</td>
+                      <td>
+                        <span className="badge salida">Agotado</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No hay productos agotados.</p>
+            )}
+          </div>
+        </div>
 
-                <tr>
-                  <td>Mouse Inalámbrico</td>
-                  <td className="salida">Salida</td>
-                  <td>10</td>
-                </tr>
-
-                <tr>
-                  <td>Monitor 24"</td>
-                  <td className="entrada">Entrada</td>
-                  <td>8</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="status-card">
+          <div>
+            <h3>Resumen del inventario</h3>
+            <p>
+              Tienes {totalProductos} productos registrados, {stockBajo} con
+              stock bajo y {agotados} agotados.
+            </p>
           </div>
         </div>
       </div>

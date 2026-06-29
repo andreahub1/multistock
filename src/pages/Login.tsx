@@ -8,21 +8,12 @@ function Login() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  // ❌ YA NO USAMOS LOCALSTORAGE USUARIOS
+  // const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
   const iniciarSesion = async () => {
-    // =========================
-    // VALIDACIÓN BÁSICA
-    // =========================
-    if (!usuario || !password) {
-      setMensaje("Completa todos los campos");
-      return;
-    }
-
     try {
-      setLoading(true);
-      setMensaje("");
-
       const res = await fetch("http://127.0.0.1:8000/api/login/", {
         method: "POST",
         headers: {
@@ -36,30 +27,19 @@ function Login() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        setMensaje(data.error || "Error al iniciar sesión");
-        setLoading(false);
-        return;
-      }
+      if (res.ok) {
+        // guardamos usuario REAL que viene de Django
+        localStorage.setItem("usuario", JSON.stringify(data));
 
-      // =========================
-      // GUARDAR USUARIO REAL
-      // =========================
-      localStorage.setItem("usuario", JSON.stringify(data));
+        setMensaje("");
 
-      // =========================
-      // REDIRECCIÓN POR ROL
-      // =========================
-      if (data.rol === "Administrador") {
-        navigate("/inicio"); // dashboard admin
+        // redirigir
+        navigate("/inicio");
       } else {
-        navigate("/inicio"); // empleado (puedes cambiar luego)
+        setMensaje(data.error || "Error al iniciar sesión");
       }
-
     } catch (error) {
       setMensaje("Error de conexión con el servidor");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -73,7 +53,10 @@ function Login() {
 
         <p className="subtitle">Sistema de control de inventario</p>
 
-        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="login-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <input
             type="text"
             placeholder="Usuario"
@@ -88,8 +71,8 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="button" onClick={iniciarSesion} disabled={loading}>
-            {loading ? "Cargando..." : "Iniciar sesión"}
+          <button type="button" onClick={iniciarSesion}>
+            Iniciar sesión
           </button>
 
           <p

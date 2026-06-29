@@ -1,0 +1,10 @@
+.productos-container {
+  padding: 35px;
+}
+
+.productos-container h1 {
+  font-size: 42px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}

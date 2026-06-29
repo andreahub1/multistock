@@ -1,0 +1,22 @@
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  background: white;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-height: 100vh;
+  background: white;
+}
+
+.dashboard-content {
+  padding: 35px;
+}
+
+.dashboard-content h1 {
+  font-size: 42px;
+  font-weight: 500;
+  color: #111827;
+}

@@ -1,0 +1,14 @@
+.header {
+  height: 95px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 35px;
+  color: white;
+  font-size: 30px;
+  background: linear-gradient(90deg, #2c5ead, #1591dc);
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
